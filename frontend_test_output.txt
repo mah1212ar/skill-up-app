@@ -1,0 +1,28 @@
+
+> skillup-frontend@0.0.0 test
+> vitest run
+
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mC:/Users/aripi/.gemini/antigravity/scratch/skillup-app/frontend[39m
+
+[90mstderr[2m | src/__tests__/Onboarding.test.jsx[2m > [22m[2mWizard Onboarding Form (Phase 3)[2m > [22m[2mLoads Step 1 gracefully[22m[39m
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ [32m✓[39m src/__tests__/Onboarding.test.jsx [2m ([22m[2m2 tests[22m[2m)[22m[90m 90[2mms[22m[39m
+[90mstderr[2m | src/__tests__/AdminDashboard.test.jsx[2m > [22m[2mSuperadmin Table Review Component (Phase 5)[2m > [22m[2mFetches secure user data endpoints and renders matching table components successfully[22m[39m
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ [32m✓[39m src/__tests__/AdminDashboard.test.jsx [2m ([22m[2m1 test[22m[2m)[22m[90m 104[2mms[22m[39m
+[90mstderr[2m | src/__tests__/Auth.test.jsx[2m > [22m[2mAuth Component Module (Phase 2)[2m > [22m[2mProperly mounts default explicit User Auth login state[22m[39m
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ [32m✓[39m src/__tests__/Auth.test.jsx [2m ([22m[2m2 tests[22m[2m)[22m[90m 62[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 03:06:10
+[2m   Duration [22m 74.09s[2m (transform 295ms, setup 17.52s, collect 41.84s, tests 256ms, environment 95.82s, prepare 55.63s)[22m
+

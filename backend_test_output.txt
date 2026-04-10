@@ -1,0 +1,19 @@
+
+> skillup-learning-app-backend@1.0.0 test
+> jest --detectOpenHandles
+
+PASS tests/api.test.js (45.752 s)
+  API Routes Testing
+    POST /api/users/profile
+      √ Creates a new user profile when valid mapped Phase 1 data is provided (628 ms)
+      √ Returns code 400 if firebaseUid payload requirement is missing (17 ms)
+    GET /api/courses
+      √ Returns a pre-populated list of simulated courses (15 ms)
+    GET /api/users/admin/all
+      √ Secures and loops all users mapping for Admin demographic table (25 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        47.716 s
+Ran all test suites.
