@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Shield, Mail, Lock, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLogin() {
-  const [email, setEmail]       = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPw, setShowPw]     = useState(false);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState('');
+  const [showPw, setShowPw] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -21,7 +21,7 @@ export default function AdminLogin() {
 
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:5000/api/users/admin/login', {
+      const res = await fetch('https://skillup-backend-7nzs.onrender.com/api/users/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

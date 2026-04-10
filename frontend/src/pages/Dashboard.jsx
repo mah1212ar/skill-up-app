@@ -69,7 +69,7 @@ export default function Dashboard() {
       if (!currentUser?.uid) return;
       try {
         setLoading(true);
-        const profileRes = await fetch(`http://localhost:5000/api/users/profile/${currentUser.uid}`);
+        const profileRes = await fetch(`https://skillup-backend-7nzs.onrender.com/api/users/profile/${currentUser.uid}`);
         if (profileRes.ok) {
           const profileData = await profileRes.json();
           setUserProfile(profileData);
@@ -134,7 +134,7 @@ export default function Dashboard() {
         email: currentUser.email,
         onboardingData: { learningInterests: newInterests }
       };
-      const res = await fetch('http://localhost:5000/api/users/profile', {
+      const res = await fetch('https://skillup-backend-7nzs.onrender.com/api/users/profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -211,11 +211,10 @@ export default function Dashboard() {
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${
-                        activeTab === tab
+                      className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${activeTab === tab
                           ? 'bg-[#275df5] text-white shadow-md shadow-[#275df5]/30'
                           : 'bg-white border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 hover:shadow-sm'
-                      }`}
+                        }`}
                     >
                       <TabIcon className="w-4 h-4" />
                       {tab === 'All' ? t('All Courses') : `${t(tab)}`}

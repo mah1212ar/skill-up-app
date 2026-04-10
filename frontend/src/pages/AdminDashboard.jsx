@@ -85,7 +85,7 @@ export default function AdminDashboard() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/users/admin/all');
+      const res = await fetch('https://skillup-backend-7nzs.onrender.com/api/users/admin/all');
       if (!res.ok) throw new Error('Cannot reach /api/users/admin/all — ensure the backend is running.');
       const data = await res.json();
       setUsers(data);
@@ -204,10 +204,10 @@ export default function AdminDashboard() {
 
         {/* ── Stat Cards ──────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          <StatCard icon={Users}        label="Total Learners"     value={stats.total}         color="border-blue-500/30"    sublabel="All registered" />
-          <StatCard icon={CheckCircle2} label="Onboarded"          value={stats.completed}     color="border-emerald-500/30" sublabel="Completed profile" />
-          <StatCard icon={Clock}        label="Pending"            value={stats.pending}        color="border-amber-500/30"   sublabel="Incomplete" />
-          <StatCard icon={Target}       label="With Interests"     value={stats.withInterests}  color="border-purple-500/30"  sublabel="Personalised tracks" />
+          <StatCard icon={Users} label="Total Learners" value={stats.total} color="border-blue-500/30" sublabel="All registered" />
+          <StatCard icon={CheckCircle2} label="Onboarded" value={stats.completed} color="border-emerald-500/30" sublabel="Completed profile" />
+          <StatCard icon={Clock} label="Pending" value={stats.pending} color="border-amber-500/30" sublabel="Incomplete" />
+          <StatCard icon={Target} label="With Interests" value={stats.withInterests} color="border-purple-500/30" sublabel="Personalised tracks" />
         </div>
 
         {/* ── Main Table Card ─────────────────────────────────────────────── */}
@@ -243,11 +243,10 @@ export default function AdminDashboard() {
                   <button
                     key={s}
                     onClick={() => setFilterStatus(s)}
-                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                      filterStatus === s
+                    className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${filterStatus === s
                         ? 'bg-rose-600 text-white shadow-lg shadow-rose-500/30'
                         : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
-                    }`}
+                      }`}
                   >
                     {s}
                   </button>
@@ -268,11 +267,11 @@ export default function AdminDashboard() {
               <table className="w-full text-left border-collapse" style={{ minWidth: '1100px' }}>
                 <thead>
                   <tr className="bg-[#1e293b]/40 border-b border-white/5 text-gray-400">
-                    <SortTh label="Name / Email"   field="name"      {...{ sortField, sortDir, onSort: handleSort }} className="pl-6" />
-                    <SortTh label="Joined"         field="createdAt" {...{ sortField, sortDir, onSort: handleSort }} />
-                    <SortTh label="Status"         field="status"    {...{ sortField, sortDir, onSort: handleSort }} />
+                    <SortTh label="Name / Email" field="name"      {...{ sortField, sortDir, onSort: handleSort }} className="pl-6" />
+                    <SortTh label="Joined" field="createdAt" {...{ sortField, sortDir, onSort: handleSort }} />
+                    <SortTh label="Status" field="status"    {...{ sortField, sortDir, onSort: handleSort }} />
                     <th className="px-5 py-4 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400">Age / Gender</th>
-                    <SortTh label="Location"       field="location"  {...{ sortField, sortDir, onSort: handleSort }} />
+                    <SortTh label="Location" field="location"  {...{ sortField, sortDir, onSort: handleSort }} />
                     <th className="px-5 py-4 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400">Education</th>
                     <th className="px-5 py-4 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400">Learning Interests</th>
                     <th className="px-5 py-4 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400">Device / Internet</th>
@@ -295,14 +294,14 @@ export default function AdminDashboard() {
                     </tr>
                   ) : (
                     processedUsers.map((user) => {
-                      const info     = user.onboardingData?.basicInfo || {};
-                      const edu      = user.onboardingData?.education || {};
-                      const access   = user.onboardingData?.digitalAccess || {};
-                      const prefs    = user.onboardingData?.learningPreferences || {};
-                      const support  = user.onboardingData?.supportNeeds || {};
+                      const info = user.onboardingData?.basicInfo || {};
+                      const edu = user.onboardingData?.education || {};
+                      const access = user.onboardingData?.digitalAccess || {};
+                      const prefs = user.onboardingData?.learningPreferences || {};
+                      const support = user.onboardingData?.supportNeeds || {};
                       const constraints = user.onboardingData?.constraints || {};
-                      const interests   = user.onboardingData?.learningInterests || [];
-                      const isExpanded  = expandedId === user._id;
+                      const interests = user.onboardingData?.learningInterests || [];
+                      const isExpanded = expandedId === user._id;
 
                       return (
                         <React.Fragment key={user._id}>

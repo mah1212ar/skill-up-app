@@ -27,11 +27,10 @@ const iconMap = {
 const SelectBox = ({ labelText, selected, onClick, t, manualIcon: ManualIcon }) => {
   const Icon = ManualIcon || iconMap[labelText];
   return (
-    <button 
+    <button
       type="button" onClick={onClick}
-      className={`w-full p-4 rounded-lg text-left border-2 flex items-center justify-between transition-all font-medium ${
-        selected ? 'border-[#275df5] bg-[#f0f4ff] text-[#275df5] shadow-sm' : 'border-gray-200 bg-white text-gray-600 hover:border-[#275df5] hover:bg-gray-50'
-      }`}
+      className={`w-full p-4 rounded-lg text-left border-2 flex items-center justify-between transition-all font-medium ${selected ? 'border-[#275df5] bg-[#f0f4ff] text-[#275df5] shadow-sm' : 'border-gray-200 bg-white text-gray-600 hover:border-[#275df5] hover:bg-gray-50'
+        }`}
     >
       <div className="flex items-center gap-3">
         {Icon && <Icon className="w-5 h-5 opacity-70" />}
@@ -102,7 +101,7 @@ export default function Onboarding() {
         }
       };
 
-      const res = await fetch('http://localhost:5000/api/users/profile', {
+      const res = await fetch('https://skillup-backend-7nzs.onrender.com/api/users/profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -147,7 +146,7 @@ export default function Onboarding() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="md:col-span-2"><Label title="Current Education Level" t={t} />
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {['None', 'Primary', 'Secondary', 'Higher Secondary', 'Graduate'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.education.currentLevel === opt} onClick={() => handleDeepChange('education', 'currentLevel', opt)} t={t} /> )}
+                {['None', 'Primary', 'Secondary', 'Higher Secondary', 'Graduate'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.education.currentLevel === opt} onClick={() => handleDeepChange('education', 'currentLevel', opt)} t={t} />)}
               </div>
             </div>
             <div className="md:col-span-2"><Label title="Previous Schooling Status" t={t} /><Input val={formData.education.previousSchooling} set={v => handleDeepChange('education', 'previousSchooling', v)} placeholder="E.g. Dropped out in 8th grade" /></div>
@@ -162,7 +161,7 @@ export default function Onboarding() {
           <div className="space-y-5">
             <div><Label title="Skills they want to learn" t={t} />
               <div className="grid grid-cols-2 gap-3">
-                {['Spoken English', 'IT / Computers', 'Mobile Repair', 'MS Excell', 'Graphic Design'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.learningInterests.skills.includes(opt)} onClick={() => handleArrayToggle('learningInterests', 'skills', opt)} t={t} /> )}
+                {['Spoken English', 'IT / Computers', 'Mobile Repair', 'MS Excell', 'Graphic Design'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.learningInterests.skills.includes(opt)} onClick={() => handleArrayToggle('learningInterests', 'skills', opt)} t={t} />)}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -191,7 +190,7 @@ export default function Onboarding() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="md:col-span-2"><Label title="Preferred format" t={t} />
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {['Video', 'Audio', 'Text', 'Mixed'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.learningPreferences.formats.includes(opt)} onClick={() => handleArrayToggle('learningPreferences', 'formats', opt)} t={t} /> )}
+                {['Video', 'Audio', 'Text', 'Mixed'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.learningPreferences.formats.includes(opt)} onClick={() => handleArrayToggle('learningPreferences', 'formats', opt)} t={t} />)}
               </div>
             </div>
             <div><Label title="Preferred language for learning" t={t} /><SelectDropdown val={formData.learningPreferences.learningLanguage} set={v => handleDeepChange('learningPreferences', 'learningLanguage', v)} options={['English', 'Bangla']} t={t} /></div>
@@ -207,7 +206,7 @@ export default function Onboarding() {
             <div><Label title="Need for supervision while learning?" t={t} /><SelectDropdown val={formData.supportNeeds.supervision} set={v => handleDeepChange('supportNeeds', 'supervision', v)} options={['Yes', 'No']} t={t} /></div>
             <div><Label title="Need for a mentor / guide?" t={t} /><SelectDropdown val={formData.supportNeeds.mentor} set={v => handleDeepChange('supportNeeds', 'mentor', v)} options={['Yes', 'No']} t={t} /></div>
             <div className="md:col-span-2"><Label title="Preference: Self-learning or Guided?" t={t} />
-              <div className="grid grid-cols-2 gap-3">{['Self-learning', 'Guided learning'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.supportNeeds.style === opt} onClick={() => handleDeepChange('supportNeeds', 'style', opt)} t={t} /> )}</div>
+              <div className="grid grid-cols-2 gap-3">{['Self-learning', 'Guided learning'].map(opt => <SelectBox key={opt} labelText={opt} selected={formData.supportNeeds.style === opt} onClick={() => handleDeepChange('supportNeeds', 'style', opt)} t={t} />)}</div>
             </div>
             <div className="md:col-span-2"><Label title="Need reminders / follow-up support?" t={t} /><SelectDropdown val={formData.supportNeeds.reminders} set={v => handleDeepChange('supportNeeds', 'reminders', v)} options={['Yes', 'No']} t={t} /></div>
           </div>
@@ -255,9 +254,9 @@ export default function Onboarding() {
           {/* Navigation Controls */}
           <div className="mt-12 pt-8 border-t border-gray-100 flex justify-between items-center">
             {step > 1 ? (
-              <button 
-                onClick={() => setStep(prev => prev - 1)} 
-                disabled={loading} 
+              <button
+                onClick={() => setStep(prev => prev - 1)}
+                disabled={loading}
                 className="px-6 py-3 rounded-lg border border-gray-300 bg-white text-gray-600 font-semibold hover:bg-gray-50 hover:text-gray-900 transition-all flex items-center gap-2 active:scale-95"
               >
                 <ArrowLeft className="w-5 h-5" /> {t("Back")}
@@ -265,16 +264,16 @@ export default function Onboarding() {
             ) : <div></div>}
 
             {step < 7 ? (
-              <button 
-                onClick={() => setStep(prev => prev + 1)} 
+              <button
+                onClick={() => setStep(prev => prev + 1)}
                 className="px-8 py-3 rounded-lg bg-[#275df5] text-white font-semibold hover:bg-[#1f4bc7] transition-all flex items-center gap-2 shadow-[0_4px_14px_rgba(39,93,245,0.39)] active:scale-95"
               >
                 {t("Next")} <ArrowRight className="w-5 h-5" />
               </button>
             ) : (
-              <button 
-                onClick={handleFinalSubmit} 
-                disabled={loading} 
+              <button
+                onClick={handleFinalSubmit}
+                disabled={loading}
                 className="px-8 py-3 rounded-lg bg-[#11a654] text-white font-bold hover:bg-[#0e8f47] transition-all flex items-center gap-2 shadow-[0_4px_14px_rgba(17,166,84,0.39)] active:scale-95 disabled:opacity-50"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Check className="w-5 h-5" /> {t("Finish Profile")}</>}

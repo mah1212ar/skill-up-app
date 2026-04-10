@@ -15,7 +15,7 @@ const initialDict = {
   "Learning Preferences": "শেখার পছন্দ",
   "Support Needs": "সমর্থন প্রয়োজন",
   "Constraints": "সীমাবদ্ধতা",
-  
+
   // Dashboard Strings
   "Ready to learn": "শেখার জন্য প্রস্তুত",
   "Discover tailored courses specifically chosen based on your chosen tracks.": "আপনার নির্বাচিত ট্র্যাকের উপর ভিত্তি করে তৈরি কোর্সগুলো খুঁজুন।",
@@ -71,7 +71,7 @@ const initialDict = {
   "Next Lesson": "পরবর্তী পাঠ",
   "Complete Course": "সম্পূর্ণ কোর্স",
   "Failed to establish module content. Try selecting another course.": "মডিউল কন্টেন্ট স্থাপন করতে ব্যর্থ হয়েছে। অন্য কোর্স নির্বাচন করার চেষ্টা করুন।",
-  
+
   // Fields Step 1
   "Full Name": "পুরো নাম",
   "Age": "বয়স",
@@ -80,38 +80,38 @@ const initialDict = {
   "Preferred Language": "পছন্দের ভাষা",
   "English": "ইংরেজি",
   "Bangla": "বাংলা",
-  
+
   // Fields Step 2
   "Current Education Level": "বর্তমান শিক্ষার স্তর",
   "Previous Schooling Status": "পূর্ববর্তী শিক্ষার অবস্থা",
   "Can you read and write comfortably?": "আপনি কি স্বাচ্ছন্দ্যে পড়তে এবং লিখতে পারেন?",
   "Any prior vocational training?": "কোনো পূর্বের বৃত্তিমূলক প্রশিক্ষণ?",
-  
+
   // Fields Step 3
   "Skills they want to learn": "যে দক্ষতাগুলো শিখতে চান",
   "Career Goal": "ক্যারিয়ারের লক্ষ্য",
   "Preferred Course Category": "পছন্দের কোর্সের বিভাগ",
   "Current Skill Level": "বর্তমান দক্ষতার স্তর",
-  
+
   // Fields Step 4
   "Access to a smartphone?": "স্মার্টফোন আছে কি?",
   "Access to a laptop / computer?": "ল্যাপটপ বা কম্পিউটার আছে কি?",
   "Internet access?": "ইন্টারনেট সংযোগ আছে কি?",
   "How often is internet available?": "ইন্টারনেট কতটা সহজলভ্য?",
   "Need for offline learning support?": "অফলাইন শেখার সমর্থন প্রয়োজন?",
-  
+
   // Fields Step 5
   "Preferred format": "পছন্দের ফরম্যাট",
   "Preferred language for learning": "শেখার মাধ্যম",
   "Available learning time": "শেখার সহজলভ্য সময়",
   "Hours per week": "সপ্তাহে কত ঘণ্টা",
-  
+
   // Fields Step 6
   "Need for supervision while learning?": "শেখার সময় তত্ত্বাবধান প্রয়োজন?",
   "Need for a mentor / guide?": "পরামর্শদাতার প্রয়োজন?",
   "Preference: Self-learning or Guided?": "পছন্দ: স্ব-শিক্ষা নাকি নির্দেশিত?",
   "Need reminders / follow-up support?": "রিমাইন্ডার / ফলো-আপ সমর্থন প্রয়োজন?",
-  
+
   // Fields Step 7
   "Family responsibilities": "পারিবারিক দায়িত্ব",
   "Work responsibilities": "কাজের দায়িত্ব",
@@ -147,7 +147,7 @@ const initialDict = {
   "Guided learning": "নির্দেশিত শিক্ষা",
   "Spoken English": "স্পোকেন ইংলিশ",
   "IT / Computers": "আইটি / কম্পিউটার",
-  "Mobile Repair": "মোবাইল মেরামত", 
+  "Mobile Repair": "মোবাইল মেরামত",
   "Tailoring": "দর্জি কাজ",
   "Graphic Design": "গ্রাফিক ডিজাইন",
   "Switch to বাংলা": "বাংলায় রূপান্তর করুন",
@@ -173,17 +173,17 @@ export const TranslationProvider = ({ children }) => {
 
   const t = useCallback(async (text) => {
     if (lang === 'en' || !text) return text;
-    
+
     // Check cache
     if (dict[text]) return dict[text];
 
-      try {
-        const res = await fetch('http://localhost:5000/api/translate', {
+    try {
+      const res = await fetch('https://skillup-backend-7nzs.onrender.com/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, target: lang })
       });
-      
+
       if (res.ok) {
         const data = await res.json();
         setDict(prev => ({ ...prev, [text]: data.translatedText }));
@@ -194,7 +194,7 @@ export const TranslationProvider = ({ children }) => {
     } finally {
       pendingRequests.delete(text);
     }
-    
+
     return text;
   }, [lang, dict]);
 
@@ -202,12 +202,12 @@ export const TranslationProvider = ({ children }) => {
   const tSync = (text) => {
     if (lang === 'en' || !text) return text;
     if (dict[text]) return dict[text];
-    
+
     if (!pendingRequests.has(text)) {
       pendingRequests.add(text);
       t(text);
     }
-    
+
     return text; // Will update gracefully once state changes
   };
 

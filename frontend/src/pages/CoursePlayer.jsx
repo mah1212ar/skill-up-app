@@ -16,7 +16,7 @@ export default function CoursePlayer() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/courses');
+        const res = await fetch('https://skillup-backend-7nzs.onrender.com/api/courses');
         const data = await res.json();
         const found = data.find(c => c._id === courseId);
         setCourse(found);
@@ -51,14 +51,14 @@ export default function CoursePlayer() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-gray-900 flex flex-col md:flex-row overflow-hidden selection:bg-[#275df5] selection:text-white">
-      
+
       {/* Sidebar Navigation */}
       <div className="w-full md:w-80 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col h-[35vh] md:h-screen transition-all shadow-sm z-20">
-        
+
         {/* Header Back Button & Course Details */}
         <div className="p-5 border-b border-gray-100 flex items-center gap-4 bg-gray-50">
           <button onClick={() => navigate('/dashboard')} className="p-2 hover:bg-gray-200 rounded-xl transition-all focus:outline-none shrink-0" title={t('Back')}>
-            <ArrowLeft className="w-5 h-5 text-gray-500"/>
+            <ArrowLeft className="w-5 h-5 text-gray-500" />
           </button>
           <div>
             <span className="text-[#275df5] text-[10px] font-bold uppercase tracking-widest block mb-0.5">{t('Course Path')}</span>
@@ -69,25 +69,24 @@ export default function CoursePlayer() {
         {/* Dynamic Modules List */}
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           <div className="mb-4 px-2 tracking-wide flex justify-between items-center opacity-80">
-             <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">{t('Curriculum')}</span>
-             <span className="text-xs font-bold text-gray-800">{course.modules?.length} {t('Lessons')}</span>
+            <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">{t('Curriculum')}</span>
+            <span className="text-xs font-bold text-gray-800">{course.modules?.length} {t('Lessons')}</span>
           </div>
 
           {course.modules?.map((mod, idx) => {
             const isActive = idx === activeModuleIdx;
-            
+
             return (
-              <button 
+              <button
                 key={idx}
                 onClick={() => setActiveModuleIdx(idx)}
-                className={`w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all ${
-                  isActive 
-                    ? 'bg-[#f0f4ff] border border-[#275df5] shadow-sm px-5' 
+                className={`w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all ${isActive
+                    ? 'bg-[#f0f4ff] border border-[#275df5] shadow-sm px-5'
                     : 'bg-transparent border border-transparent hover:bg-gray-50'
-                }`}
+                  }`}
               >
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all ${isActive ? 'bg-[#275df5] text-white shadow-md shadow-[#275df5]/30' : 'bg-gray-100 text-gray-400'}`}>
-                   {isActive ? <Icon className="w-4 h-4" /> : <span className="text-xs font-bold">{idx + 1}</span>}
+                  {isActive ? <Icon className="w-4 h-4" /> : <span className="text-xs font-bold">{idx + 1}</span>}
                 </div>
                 <div className="overflow-hidden pr-2">
                   <h4 className={`text-sm font-semibold line-clamp-2 ${isActive ? 'text-[#275df5]' : 'text-gray-700'}`}>{t(mod.title)}</h4>
@@ -101,17 +100,17 @@ export default function CoursePlayer() {
 
       {/* Main Content Viewer (Player) */}
       <div className="flex-1 h-[65vh] md:h-screen flex flex-col relative overflow-y-auto bg-gray-50/50">
-        
+
         {activeModule ? (
           <div className="w-full max-w-5xl mx-auto p-4 md:p-8 z-10 flex flex-col h-full animate-fade-in">
-            
+
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-3">
                 <span className="px-3 py-1 rounded-md bg-white text-gray-600 text-[10px] font-bold uppercase tracking-widest border border-gray-200 shadow-sm">
                   {t('Lesson')} {activeModuleIdx + 1}
                 </span>
                 <span className="text-[#275df5] text-[11px] font-bold tracking-widest uppercase flex items-center gap-1.5 bg-[#f0f4ff] border border-[#275df5]/20 px-3 py-1 rounded-md">
-                  <Clock className="w-3.5 h-3.5"/> {activeModule.durationMinutes} {t('Min Read')}
+                  <Clock className="w-3.5 h-3.5" /> {activeModule.durationMinutes} {t('Min Read')}
                 </span>
               </div>
               <h1 className="text-2xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight">{t(activeModule.title)}</h1>
@@ -122,13 +121,13 @@ export default function CoursePlayer() {
               {/* Fake Video Screen */}
               <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a]">
                 <div className="text-center">
-                   <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-[#275df5] hover:scale-105 transition-all" onClick={() => setIsPlaying(!isPlaying)}>
-                     {isPlaying ? <Pause className="w-10 h-10 text-white" /> : <Play className="w-10 h-10 text-white ml-2" />}
-                   </div>
-                   <p className="text-white/50 text-sm tracking-widest uppercase font-semibold">{t('Open Source Content Media')}</p>
+                  <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-[#275df5] hover:scale-105 transition-all" onClick={() => setIsPlaying(!isPlaying)}>
+                    {isPlaying ? <Pause className="w-10 h-10 text-white" /> : <Play className="w-10 h-10 text-white ml-2" />}
+                  </div>
+                  <p className="text-white/50 text-sm tracking-widest uppercase font-semibold">{t('Open Source Content Media')}</p>
                 </div>
               </div>
-              
+
               {/* Custom Player Controls UI */}
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="w-full h-1 bg-white/20 rounded-full mb-4 cursor-pointer relative">
@@ -136,13 +135,13 @@ export default function CoursePlayer() {
                 </div>
                 <div className="flex items-center justify-between text-white">
                   <div className="flex items-center gap-4">
-                     <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? <Pause className="w-5 h-5"/> : <Play className="w-5 h-5"/>}</button>
-                     <Volume2 className="w-5 h-5" />
-                     <span className="text-xs font-semibold">03:15 / {activeModule.durationMinutes}:00</span>
+                    <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}</button>
+                    <Volume2 className="w-5 h-5" />
+                    <span className="text-xs font-semibold">03:15 / {activeModule.durationMinutes}:00</span>
                   </div>
                   <div className="flex items-center gap-4">
-                     <Settings className="w-5 h-5" />
-                     <Maximize className="w-5 h-5" />
+                    <Settings className="w-5 h-5" />
+                    <Maximize className="w-5 h-5" />
                   </div>
                 </div>
               </div>
@@ -151,20 +150,20 @@ export default function CoursePlayer() {
             {/* Coursera-style Tabbed Context Section */}
             <div className="mt-8 flex-1 flex flex-col">
               <div className="flex border-b border-gray-200 gap-8 px-2">
-                 <button 
-                   onClick={() => setActiveTab('Overview')} 
-                   className={`pb-3 font-semibold transition-all ${activeTab === 'Overview' ? 'border-b-2 border-[#275df5] text-[#275df5]' : 'text-gray-500 hover:text-gray-900 border-b-2 border-transparent'}`}
-                 >
-                   {t('Overview')}
-                 </button>
-                 <button 
-                   onClick={() => setActiveTab('Transcript')} 
-                   className={`pb-3 font-semibold transition-all ${activeTab === 'Transcript' ? 'border-b-2 border-[#275df5] text-[#275df5]' : 'text-gray-500 hover:text-gray-900 border-b-2 border-transparent'}`}
-                 >
-                   {t('Transcript')}
-                 </button>
+                <button
+                  onClick={() => setActiveTab('Overview')}
+                  className={`pb-3 font-semibold transition-all ${activeTab === 'Overview' ? 'border-b-2 border-[#275df5] text-[#275df5]' : 'text-gray-500 hover:text-gray-900 border-b-2 border-transparent'}`}
+                >
+                  {t('Overview')}
+                </button>
+                <button
+                  onClick={() => setActiveTab('Transcript')}
+                  className={`pb-3 font-semibold transition-all ${activeTab === 'Transcript' ? 'border-b-2 border-[#275df5] text-[#275df5]' : 'text-gray-500 hover:text-gray-900 border-b-2 border-transparent'}`}
+                >
+                  {t('Transcript')}
+                </button>
               </div>
-              
+
               <div className="py-6 flex-1">
                 {activeTab === 'Overview' && (
                   <div className="space-y-4 max-w-3xl animate-fade-in">
@@ -177,12 +176,12 @@ export default function CoursePlayer() {
                 )}
                 {activeTab === 'Transcript' && (
                   <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm animate-fade-in max-w-3xl">
-                     <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">{t('Video Transcript')}</h3>
-                     <div className="space-y-4 text-gray-600 leading-relaxed text-sm">
-                       <p><span className="text-[#275df5] font-semibold mr-2">[00:00]</span> {t('Welcome to the beginning of the open source module. Let us start with a basic overview of our curriculum.')}</p>
-                       <p><span className="text-[#275df5] font-semibold mr-2">[01:15]</span> {t('Before we dive into technical details, understand that the tools shown in this video are free and accessible to everyone.')}</p>
-                       <p><span className="text-[#275df5] font-semibold mr-2">[03:15]</span> {t('Proceeding to the main concepts, watch how the layout naturally flows to create a responsive and user-friendly design.')}</p>
-                     </div>
+                    <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">{t('Video Transcript')}</h3>
+                    <div className="space-y-4 text-gray-600 leading-relaxed text-sm">
+                      <p><span className="text-[#275df5] font-semibold mr-2">[00:00]</span> {t('Welcome to the beginning of the open source module. Let us start with a basic overview of our curriculum.')}</p>
+                      <p><span className="text-[#275df5] font-semibold mr-2">[01:15]</span> {t('Before we dive into technical details, understand that the tools shown in this video are free and accessible to everyone.')}</p>
+                      <p><span className="text-[#275df5] font-semibold mr-2">[03:15]</span> {t('Proceeding to the main concepts, watch how the layout naturally flows to create a responsive and user-friendly design.')}</p>
+                    </div>
                   </div>
                 )}
               </div>
@@ -190,15 +189,15 @@ export default function CoursePlayer() {
 
             {/* Navigation Controls Component */}
             <div className="flex items-center justify-between mt-auto pt-6 border-t border-gray-200">
-              <button 
+              <button
                 onClick={() => setActiveModuleIdx(prev => Math.max(prev - 1, 0))}
                 disabled={activeModuleIdx === 0}
                 className="px-6 py-3 rounded-lg border border-gray-300 bg-white text-gray-700 font-bold hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 active:scale-95 shadow-sm"
               >
-                 {t('Previous')}
+                {t('Previous')}
               </button>
 
-              <button 
+              <button
                 onClick={() => {
                   if (activeModuleIdx < course.modules.length - 1) {
                     setActiveModuleIdx(prev => prev + 1);
@@ -208,13 +207,13 @@ export default function CoursePlayer() {
                 }}
                 className="px-8 py-3 rounded-lg bg-[#275df5] text-white font-bold hover:bg-[#1f4bc7] transition-all flex items-center gap-2 shadow-md hover:shadow-lg active:scale-95"
               >
-                {activeModuleIdx < (course.modules?.length || 0) - 1 ? t('Next Lesson') : <><CheckCircle2 className="w-5 h-5"/> {t('Complete Course')}</>}
+                {activeModuleIdx < (course.modules?.length || 0) - 1 ? t('Next Lesson') : <><CheckCircle2 className="w-5 h-5" /> {t('Complete Course')}</>}
               </button>
             </div>
-            
+
           </div>
         ) : (
-           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-fade-in"><span className="text-gray-500 font-medium">{t('Failed to establish module content. Try selecting another course.')}</span></div>
+          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-fade-in"><span className="text-gray-500 font-medium">{t('Failed to establish module content. Try selecting another course.')}</span></div>
         )}
       </div>
     </div>
