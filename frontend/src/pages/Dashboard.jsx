@@ -5,53 +5,35 @@ import { useAuth } from '../contexts/AuthContext';
 import { auth } from '../firebase/firebase';
 import { LogOut, BookOpen, PlayCircle, Loader2, Star, Sparkles, Folder, Plus, X, Mic, Monitor, Wrench, Scissors, Palette } from 'lucide-react';
 
-// ── Rich static course catalog, keyed by interest track ──────────────────────
-const TRACK_COURSES = {
-  'Spoken English': [
-    { _id: 'se_1', title: 'Everyday Conversational English', description: 'Build confidence speaking in real-life situations — greetings, shopping, and more.', format: 'Video', category: 'Spoken English', modules: [{ title: 'Greetings & Introductions', durationMinutes: 8 }, { title: 'Asking for Directions', durationMinutes: 10 }, { title: 'At the Market', durationMinutes: 12 }] },
-    { _id: 'se_2', title: 'English Pronunciation Mastery', description: 'Learn the sounds of English through simple, guided audio drills.', format: 'Audio', category: 'Spoken English', modules: [{ title: 'Vowel Sounds', durationMinutes: 10 }, { title: 'Consonant Blends', durationMinutes: 10 }] },
-    { _id: 'se_3', title: 'Job Interview English', description: 'Prepare for interviews with role-play exercises and key phrases.', format: 'Video', category: 'Spoken English', modules: [{ title: 'Common Interview Questions', durationMinutes: 15 }, { title: 'Answering Confidently', durationMinutes: 12 }] },
-  ],
-  'IT / Computers': [
-    { _id: 'it_1', title: 'Basics of Using a Computer', description: 'Navigate a computer, use a keyboard and mouse, and manage files.', format: 'Video', category: 'IT / Computers', modules: [{ title: 'Turning On & Off', durationMinutes: 5 }, { title: 'Keyboard Shortcuts', durationMinutes: 10 }, { title: 'File Management', durationMinutes: 12 }] },
-    { _id: 'it_2', title: 'Introduction to the Internet', description: 'Learn to browse safely, use search engines, and send emails.', format: 'Video', category: 'IT / Computers', modules: [{ title: 'What is the Internet?', durationMinutes: 8 }, { title: 'Browsing Safely', durationMinutes: 10 }] },
-    { _id: 'it_3', title: 'Using MS Excel for Work', description: 'Create simple spreadsheets, track finances, and build basic formulas.', format: 'Mixed', category: 'IT / Computers', modules: [{ title: 'Cells & Data Entry', durationMinutes: 12 }, { title: 'Basic Formulas', durationMinutes: 15 }, { title: 'Creating Charts', durationMinutes: 10 }] },
-  ],
-  'Mobile Repair': [
-    { _id: 'mr_1', title: 'Introduction to Smartphone Repair', description: 'Understand smartphone anatomy and learn safe disassembly techniques.', format: 'Video', category: 'Mobile Repair', modules: [{ title: 'Tools of the Trade', durationMinutes: 10 }, { title: 'Screen Replacement Basics', durationMinutes: 18 }] },
-    { _id: 'mr_2', title: 'Battery & Charging Fault Diagnosis', description: 'Diagnose and fix common battery, charging port, and power issues.', format: 'Video', category: 'Mobile Repair', modules: [{ title: 'Battery Health Tests', durationMinutes: 12 }, { title: 'Charging Port Cleaning & Repair', durationMinutes: 15 }] },
-    { _id: 'mr_3', title: 'Software Troubleshooting on Android', description: 'Factory resets, firmware flashing, and unlocking patterns.', format: 'Mixed', category: 'Mobile Repair', modules: [{ title: 'Common Software Issues', durationMinutes: 10 }, { title: 'Safe Firmware Update', durationMinutes: 20 }] },
-  ],
-  'Tailoring': [
-    { _id: 'tl_1', title: 'Hand Sewing Fundamentals', description: 'Master basic stitches, hemming, and simple repairs by hand.', format: 'Video', category: 'Tailoring', modules: [{ title: 'Needle & Thread Basics', durationMinutes: 8 }, { title: 'Running Stitch & Back Stitch', durationMinutes: 12 }] },
-    { _id: 'tl_2', title: 'Introduction to the Sewing Machine', description: 'Set up, thread, and operate a sewing machine with confidence.', format: 'Video', category: 'Tailoring', modules: [{ title: 'Machine Parts', durationMinutes: 10 }, { title: 'Threading the Machine', durationMinutes: 8 }, { title: 'Straight Stitch Practice', durationMinutes: 15 }] },
-    { _id: 'tl_3', title: 'Basic Garment Construction', description: 'Cut fabric from a simple pattern and stitch it into a wearable item.', format: 'Mixed', category: 'Tailoring', modules: [{ title: 'Reading a Pattern', durationMinutes: 12 }, { title: 'Cutting & Pinning', durationMinutes: 10 }, { title: 'Final Assembly', durationMinutes: 20 }] },
-  ],
-  'Graphic Design': [
-    { _id: 'gd_1', title: 'Design Fundamentals', description: 'Learn colour theory, typography basics, and layout principles.', format: 'Video', category: 'Graphic Design', modules: [{ title: 'Colour Theory', durationMinutes: 12 }, { title: 'Typography 101', durationMinutes: 10 }] },
-    { _id: 'gd_2', title: 'Creating Posters with Canva', description: 'Design eye-catching posters for businesses and events — no experience needed.', format: 'Video', category: 'Graphic Design', modules: [{ title: 'Canva Interface Tour', durationMinutes: 8 }, { title: 'Building Your First Poster', durationMinutes: 20 }] },
-    { _id: 'gd_3', title: 'Social Media Content Creation', description: 'Design scroll-stopping posts for Facebook and Instagram.', format: 'Mixed', category: 'Graphic Design', modules: [{ title: 'Platform Sizes & Specs', durationMinutes: 8 }, { title: 'Content Templates', durationMinutes: 15 }, { title: 'Branding Basics', durationMinutes: 12 }] },
-  ],
-  'General': [
-    { _id: 'gen_1', title: 'Introduction to Mobile Networking', description: 'Learn the basic architecture of how mobile networks operate.', format: 'Video', category: 'General', modules: [{ title: 'What is 4G?', durationMinutes: 10 }, { title: 'Using the Internet Safely', durationMinutes: 15 }] },
-    { _id: 'gen_2', title: 'Basic Financial Literacy', description: 'Understanding savings, budgeting, and simple basic accounting strategies.', format: 'Audio', category: 'General', modules: [{ title: 'Why Save Money?', durationMinutes: 5 }, { title: 'Basic Budgeting Rules', durationMinutes: 12 }] },
-    { _id: 'gen_3', title: 'Health & Hygiene for the Modern Worker', description: 'Practical health habits that improve productivity and wellbeing.', format: 'Text', category: 'General', modules: [{ title: 'Personal Hygiene Habits', durationMinutes: 8 }, { title: 'Mental Wellness at Work', durationMinutes: 10 }] },
-    { _id: 'gen_4', title: 'Spoken English', description: 'Build confidence speaking in real-life situations.', format: 'Video', category: 'Spoken English', modules: [{ title: 'Greetings', durationMinutes: 8 }, { title: 'At the Market', durationMinutes: 12 }] },
-    { _id: 'gen_5', title: 'MS Excel Basics', description: 'Create simple spreadsheets and build basic formulas.', format: 'Mixed', category: 'IT / Computers', modules: [{ title: 'Cells & Data Entry', durationMinutes: 12 }, { title: 'Basic Formulas', durationMinutes: 15 }] },
-    { _id: 'gen_6', title: 'Smartphone Repair 101', description: 'Understand smartphone anatomy and learn safe disassembly techniques.', format: 'Video', category: 'Mobile Repair', modules: [{ title: 'Tools of the Trade', durationMinutes: 10 }, { title: 'Screen Replacement', durationMinutes: 18 }] },
-  ]
-};
+import { TRACK_COURSES, ALL_DEFINED_TRACKS } from '../data/courses';
 
+// ── Track icon + colour map (local — not needed in courses.js) ─────────────────
 const TRACK_ICONS = {
   'Spoken English': Mic,
   'IT / Computers': Monitor,
   'Mobile Repair': Wrench,
   'Tailoring': Scissors,
   'Graphic Design': Palette,
-  'General': BookOpen,
+  'All': BookOpen,
 };
 
-const ALL_DEFINED_TRACKS = ['Spoken English', 'IT / Computers', 'Mobile Repair', 'Tailoring', 'Graphic Design'];
+const TRACK_GRADIENTS = {
+  'Spoken English':  'from-blue-400/20   via-indigo-100  to-blue-50',
+  'IT / Computers':  'from-violet-400/20 via-purple-100  to-violet-50',
+  'Mobile Repair':   'from-orange-400/20 via-amber-100   to-orange-50',
+  'Tailoring':       'from-pink-400/20   via-rose-100    to-pink-50',
+  'Graphic Design':  'from-emerald-400/20 via-teal-100   to-emerald-50',
+  'General':         'from-slate-400/20  via-slate-100   to-slate-50',
+};
+
+const TRACK_ICON_COLORS = {
+  'Spoken English':  'text-blue-500',
+  'IT / Computers':  'text-violet-500',
+  'Mobile Repair':   'text-orange-500',
+  'Tailoring':       'text-pink-500',
+  'Graphic Design':  'text-emerald-500',
+  'General':         'text-slate-500',
+};
 
 export default function Dashboard() {
   const { currentUser } = useAuth();
@@ -253,19 +235,25 @@ export default function Dashboard() {
                       style={{ animationDelay: `${idx * 80}ms` }}
                       onClick={() => navigate(`/courses/${course._id}`)}
                     >
-                      {/* Card Thumbnail */}
-                      <div className="h-48 rounded-[20px] bg-slate-100 flex items-center justify-center relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#275df5]/10 via-slate-100 to-slate-200 mix-blend-multiply"></div>
-                        <PlayCircle className="w-16 h-16 text-[#275df5]/50 group-hover:text-[#275df5] transition-all group-hover:scale-110 duration-500 ease-out z-10" />
-                        <div className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg flex items-center gap-1.5 shadow-sm">
-                          <span className="text-[10px] font-bold text-gray-800 uppercase tracking-wider">{course.format || 'Video'}</span>
+                      {/* Card Thumbnail — category-coloured gradient */}
+                      <div className={`h-48 rounded-[20px] flex items-center justify-center relative overflow-hidden bg-gradient-to-br ${TRACK_GRADIENTS[course.category] || TRACK_GRADIENTS['General']}`}>
+                        {/* Decorative blurred blob */}
+                        <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-30 bg-current" />
+                        {/* Centre icon */}
+                        {(() => { const CatIcon = TRACK_ICONS[course.category] || PlayCircle; return <CatIcon className={`w-16 h-16 ${TRACK_ICON_COLORS[course.category] || 'text-slate-400'} opacity-40 group-hover:opacity-80 group-hover:scale-110 transition-all duration-500 ease-out z-10`} />; })()}
+                        {/* Format badge */}
+                        <div className="absolute top-3 left-3 px-3 py-1 bg-white/80 backdrop-blur-md rounded-lg flex items-center gap-1.5 shadow-sm border border-white/60">
+                          <span className="text-[10px] font-bold text-gray-700 uppercase tracking-wider">{course.format || 'Video'}</span>
                         </div>
-                        <div className="absolute top-3 right-3 px-3 py-1 bg-[#ffb800]/20 backdrop-blur-md rounded-full border border-[#ffb800]/20 flex items-center gap-1.5">
-                          <Star className="w-3.5 h-3.5 text-[#ffb800] fill-[#ffb800]" />
+                        {/* Rating badge */}
+                        <div className="absolute top-3 right-3 px-2.5 py-1 bg-white/80 backdrop-blur-md rounded-full border border-white/60 flex items-center gap-1 shadow-sm">
+                          <Star className="w-3 h-3 text-[#ffb800] fill-[#ffb800]" />
+                          <span className="text-[10px] font-bold text-gray-700">4.8</span>
                         </div>
+                        {/* Category strip */}
                         {course.category && (
-                          <div className="absolute bottom-3 left-3 px-2.5 py-1 bg-[#275df5]/90 rounded-md">
-                            <span className="text-[10px] font-bold text-white uppercase tracking-wider">{course.category}</span>
+                          <div className={`absolute bottom-0 inset-x-0 px-4 py-2 bg-gradient-to-t from-black/30 to-transparent`}>
+                            <span className="text-[10px] font-bold text-white/90 uppercase tracking-wider">{course.category}</span>
                           </div>
                         )}
                       </div>

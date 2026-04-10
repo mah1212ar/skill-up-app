@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { TranslationProvider } from './contexts/TranslationContext';
 import Auth from './components/Auth/Auth';
@@ -11,11 +11,17 @@ import CoursePlayer from './pages/CoursePlayer';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
 
-
 // ── AdminRoute: JWT-based guard for the superadmin dashboard ─────────────────
 function AdminRoute({ children }) {
   const token = localStorage.getItem('adminToken');
   return token ? children : <Navigate to="/admin-login" replace />;
+}
+
+// ── Only show LanguageToggle on non-admin routes ──────────────────────────────
+function ConditionalLanguageToggle() {
+  const { pathname } = useLocation();
+  if (pathname.startsWith('/admin')) return null;
+  return <LanguageToggle />;
 }
 
 function App() {
@@ -23,7 +29,7 @@ function App() {
     <AuthProvider>
       <TranslationProvider>
         <Router>
-          <LanguageToggle />
+          <ConditionalLanguageToggle />
           <Routes>
             {/* Learner auth & app routes */}
             <Route path="/login"      element={<Auth />} />
@@ -47,3 +53,4 @@ function App() {
 }
 
 export default App;
+
